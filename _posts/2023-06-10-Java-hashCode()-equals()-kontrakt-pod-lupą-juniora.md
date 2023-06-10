@@ -105,9 +105,9 @@ W tym momencie u mnie pojawiły się w głowie 2 pytania:
 2. lub dlaczego od razu nie zostaje wykonana na obu obiektach metoda equals(), bez zbędnego porónwywania hasz-y?
 	
 **Odpowiedź na pytanie 1** : źródło implementacji, które doprowadziło do takiego wyniku znajdziemy w instrukcji warunkowej w pakiecie java.utils:
-
+<pre><code class="java">/* 
 if (p.hash == hash && ((k = p.key) == key || key != null && key.equals(k))) (1)
-
+</code></pre>
 Ale odpowiedzi na to pytanie, należy szukać bezpośrednio w jednym z punktów kontraktu equals()-hashCode(): jeżeli equals() na dwóch obiektach zwraca true to ich hash-Code-y są  równe. Ale, jeżeli hashCody są równe to metodą equals() może zwracać true lub false. 
 
 W krótkich, żołnierskich słowach: jeżeli porównanie hashCode() obu obiektów zwraca false to obiekty są różne. Jeżeli zwraca true, wówczas spór rozstrzyga metoda equals().
@@ -133,9 +133,9 @@ Metody equals() oraz hashCode() zazwyczaj generujemy automatycznie, używając d
 Jeżeli kogoś nie satysfakcjonuje odpowiedź na pytanie pierwsze to bardzo dobrze, bo można do niej podejść z drugiej strony i wymaga ona głębszej analizy.
 
 Jako przykład posłużyć nam może jeszcze jeden przypadek, gdy dwa unikatowe obiekty zwracają taki sam hashCode(). Teoretycznie jest to możliwe, choćby ze względu na skończoną ilość wartości int, a przecież nowych obiektów możemy tworzyć nieskończenie wiele. Praktycznie jednak, wewnętrznie metoda hashCode() została tak zaimplementowana, aby do tych powtórek za często nie dochodziło. 
-
+<pre><code class="java">/* 
 int result = 31 * result + (element == null ? 0 : element.hashCode());
-
+</code></pre>
 Gdybyśmy natrafili w naszym przykładzie na taki przypadek to oczywiście instrukcja warunkowa z poprzedniego akapitu(1) kwestię by odpowiednio rozwiązała.
 
 ## Podsumowanie
