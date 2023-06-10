@@ -100,8 +100,9 @@ Dla wzrokowców, poniżej wizualizacja powyższego procesu:
 
 W tym momencie u mnie pojawiły się w głowie 2 pytania:
 
-1.dlaczego zatem obiekt lebowski2 nie zostaje od razu odrzucony, skoro hash-e obu obiektów są takie same i wywołana zostaje dodatkowo metoda equals()? 
-2.lub dlaczego od razu nie zostaje wykonana na obu obiektach metoda equals(), bez zbędnego porónwywania hasz-y?
+1. dlaczego zatem obiekt lebowski2 nie zostaje od razu odrzucony, skoro hash-e obu obiektów są takie same i wywołana zostaje dodatkowo metoda equals()?
+
+2. lub dlaczego od razu nie zostaje wykonana na obu obiektach metoda equals(), bez zbędnego porónwywania hasz-y?
 	
 Odpowiedź na pytanie 1 : źródło implementacji, które doprowadziło do takiego wyniku znajdziemy w instrukcji warunkowej w pakiecie java.utils:
 
