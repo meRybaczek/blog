@@ -33,7 +33,7 @@ public class Person {
         System.out.println("hashcode method initialized for " + firstName);
         return Objects.hash(firstName, lastName, age);
     }
-    ```
+   java```
  
 W metodzie equals() oraz hashCode() dodałem linijkę z System.out-em aby doświadczyć w konsoli kolejność działań. Możnaby było skorzystać z debuggera, ale w tym przypadku dosłownie czarno na białym zobaczymy obie metody w akcji.
 
@@ -55,4 +55,4 @@ public class PersonApp {
         System.out.println("Ilosc dodanych osob: " + persons.size());
     }
 }
-```
+java```
