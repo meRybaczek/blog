@@ -119,9 +119,9 @@ Przykład:
 {% highlight java %}
 
 @Overide 
-	public int hashCode() {
-	return 1;
-	}
+ public int hashCode() {
+  return 1;
+ }
  {% endhighlight %}
 
 Załóżmy powyższą implementację meotdy hashCode() w klasie naszego obiektu. Zwraca dla każdego obiektu tą samą wartość. W tym przypadku, wszyskie dodawane obiekty trafiałyby pod ten sam adres w tablicy haszującej(do tego samego kubełka). Ale zanim obiekt zostałby dodany(lub odrzucony) lub gdbyśmy wyszukiwali obiektu w HashMap-ie, metoda equlas() byłaby wywoływana pomiędzy każdym nowym obiektem a już istniejącym - mało to optymalne. Mielibyśmy złożoność O(n) (lub ewentualnie O(logn) - ale to temat na bardziej zaawansowany artykuł)
