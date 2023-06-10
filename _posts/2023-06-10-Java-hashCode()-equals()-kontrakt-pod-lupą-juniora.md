@@ -104,7 +104,7 @@ W tym momencie u mnie pojawiły się w głowie 2 pytania:
 
 2. lub dlaczego od razu nie zostaje wykonana na obu obiektach metoda equals(), bez zbędnego porónwywania hasz-y?
 	
-Odpowiedź na pytanie 1 : źródło implementacji, które doprowadziło do takiego wyniku znajdziemy w instrukcji warunkowej w pakiecie java.utils:
+**Odpowiedź na pytanie 1** : źródło implementacji, które doprowadziło do takiego wyniku znajdziemy w instrukcji warunkowej w pakiecie java.utils:
 
 if (p.hash == hash && ((k = p.key) == key || key != null && key.equals(k))) (1)
 
@@ -112,7 +112,7 @@ Ale odpowiedzi na to pytanie, należy szukać bezpośrednio w jednym z punktów 
 
 W krótkich, żołnierskich słowach: jeżeli porównanie hashCode() obu obiektów zwraca false to obiekty są różne. Jeżeli zwraca true, wówczas spór rozstrzyga metoda equals().
 
-Odpowiedź na pytanie 2: z powodów wdajnościowych. Mniej kosztowne jest porównanie (już obliczonych przecież) haszy obu obiektów niż wywoływanie na nich metody equals(). Jeżeli hash-e są różne to obiekty są różne - nie potrzeba wywoływać equals(). Implemetacją powyższej optymalizacji jest właśnie w/w instrukcja warunkowa (1).
+**Odpowiedź na pytanie 2**: z powodów wdajnościowych. Mniej kosztowne jest porównanie (już obliczonych przecież) haszy obu obiektów niż wywoływanie na nich metody equals(). Jeżeli hash-e są różne to obiekty są różne - nie potrzeba wywoływać equals(). Implemetacją powyższej optymalizacji jest właśnie w/w instrukcja warunkowa (1).
 
 Mam nadzieję, że już wiadomo dlaczego tak ważne jest poprawne zaimplementowanie metody hashCode() i equals(), zgodnie z zasadami ich kontraktów. Bez trzymania się tych zasad kod albo byłby mało wydajny albo niepoprawnie dodawał duplikaty.  
 
