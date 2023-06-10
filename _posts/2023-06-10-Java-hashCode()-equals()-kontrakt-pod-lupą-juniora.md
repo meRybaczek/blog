@@ -18,7 +18,6 @@ public class Person {
     private final String lastName;
     private final Integer age;
 
-
     @Override
     public boolean equals(Object o) {
 
