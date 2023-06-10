@@ -12,3 +12,26 @@ To, że metoda equals() powinna być zaimplementowana w klasie naszego obiektu, 
 Proponuje wykonać szybki test, który pozwoli unaocznić zasadę działania kontraktu equals() - hashCode().
 
 Moje obiekty testowe będą instancjami klasy Person:
+
+ublic class Person {
+    private final String firstName;
+    private final String lastName;
+    private final Integer age;
+
+    //some boiler code here
+    @Override
+    public boolean equals(Object o) {
+
+        System.out.println("equals method initialized for " + firstName);
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return Objects.equals(firstName, person.firstName) &&
+                Objects.equals(lastName, person.lastName) && Objects.equals(age, person.age);
+    }
+
+    @Override
+    public int hashCode() {
+        System.out.println("hashcode method initialized for " + firstName);
+        return Objects.hash(firstName, lastName, age);
+    }
