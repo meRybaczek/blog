@@ -1,7 +1,7 @@
 ---
 published: true
 ---
-## A New Post
+## Java hashCode() i equals() - kontrakt pod lupą juniora
 ![]({{site.baseurl}}/images/mala-czerwona-zabawka-samochodowa-dla-dziecka-bawiacego-sie-z-nia-dziecka.jpg)
 
 
@@ -14,4 +14,5 @@ To, że metoda equals() powinna być zaimplementowana w klasie naszego obiektu, 
 Proponuje wykonać szybki test, który pozwoli unaocznić zasadę działania kontraktu equals() - hashCode().
 
 Moje obiekty testowe będą instancjami klasy Person:
+
 
