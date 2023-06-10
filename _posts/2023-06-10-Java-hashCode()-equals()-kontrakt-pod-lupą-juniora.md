@@ -38,7 +38,7 @@ public class Person {
 W metodzie equals() oraz hashCode() dodałem linijkę z System.out-em aby doświadczyć w konsoli kolejność działań. Możnaby było skorzystać z debuggera, ale w tym przypadku dosłownie czarno na białym zobaczymy obie metody w akcji.
 
 Teraz czas na eksperyment. W klasie PersonApp dodajemy do zbioru nowe obiekty klasy Person, dwie unikatowe i trzecia taka sama jak pierwsza:
-~~~
+```
 public class PersonApp {
     public static void main(String[] args) {
 
@@ -56,6 +56,3 @@ public class PersonApp {
     }
 }
 ```
-
-
-
