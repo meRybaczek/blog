@@ -38,3 +38,24 @@ public class Person {
 W metodzie equals() oraz hashCode() dodałem linijkę z System.out-em aby doświadczyć w konsoli kolejność działań. Możnaby było skorzystać z debuggera, ale w tym przypadku dosłownie czarno na białym zobaczymy obie metody w akcji.
 
 Teraz czas na eksperyment. W klasie PersonApp dodajemy do zbioru nowe obiekty klasy Person, dwie unikatowe i trzecia taka sama jak pierwsza:
+~~~
+public class PersonApp {
+    public static void main(String[] args) {
+
+        Set<Person> persons = new HashSet<>();
+
+        Person lebowski1 = new Person("Jeffrey", "Lebowski", 45);
+        Person sobczak = new Person("Walter", "Sobchack", 45);
+        Person lebowski2 = new Person("Jeffrey", "Lebowski", 45);
+
+        System.out.println("Dodano lebowski1: " + persons.add(lebowski1) + "\n");
+        System.out.println("Dodano sobczak: " + persons.add(sobczak) + "\n");
+        System.out.println("Dodano lebowski2: " + persons.add(lebowski2) + "\n");
+
+        System.out.println("Ilosc dodanych osob: " + persons.size());
+    }
+}
+```
+
+
+
