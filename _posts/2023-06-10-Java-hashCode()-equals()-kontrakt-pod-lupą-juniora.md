@@ -12,7 +12,7 @@ To, że metoda equals() powinna być zaimplementowana w klasie naszego obiektu, 
 Proponuje wykonać szybki test, który pozwoli unaocznić zasadę działania kontraktu equals() - hashCode().
 
 Moje obiekty testowe będą instancjami klasy Person:
-```
+```java
 public class Person {
     private final String firstName;
     private final String lastName;
@@ -38,7 +38,7 @@ public class Person {
 W metodzie equals() oraz hashCode() dodałem linijkę z System.out-em aby doświadczyć w konsoli kolejność działań. Możnaby było skorzystać z debuggera, ale w tym przypadku dosłownie czarno na białym zobaczymy obie metody w akcji.
 
 Teraz czas na eksperyment. W klasie PersonApp dodajemy do zbioru nowe obiekty klasy Person, dwie unikatowe i trzecia taka sama jak pierwsza:
-```
+```java
 public class PersonApp {
     public static void main(String[] args) {
 
