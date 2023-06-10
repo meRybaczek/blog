@@ -59,7 +59,7 @@ public class PersonApp {
 
 
 W konsoli zobaczymy wydruk:
-{% highlight java %}
+<pre><code class="java">/* 
 hashcode method initialized for Jeffrey
 Dodano lebowski1: true
 
@@ -71,7 +71,7 @@ equals method initialized for Jeffrey
 Dodano lebowski2: false
 
 Ilosc dodanych osob: 2
-{% endhighlight %}
+</code></pre>
 
 
 Dodane zostały dwie osoby: lebowski1 oraz sobczak, a lebowski2 został odrzucony.
