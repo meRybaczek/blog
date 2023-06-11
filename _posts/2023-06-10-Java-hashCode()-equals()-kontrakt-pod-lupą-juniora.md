@@ -109,7 +109,7 @@ W tym momencie u mnie pojawiły się w głowie 2 pytania:
 <pre><code class="java">/* 
 if (p.hash == hash && ((k = p.key) == key || key != null && key.equals(k))) (1)
 </code></pre>
-Ale odpowiedzi na to pytanie, należy szukać bezpośrednio w jednym z punktów kontraktu equals()-hashCode(): jeżeli equals() na dwóch obiektach zwraca true to ich hash-Code-y są  równe. Ale, jeżeli hashCody są równe to metodą equals() może zwracać true lub false. 
+Ale odpowiedzi na to pytanie, należy szukać bezpośrednio w jednym z punktów kontraktu equals()-hashCode(): j**eżeli equals() na dwóch obiektach zwraca true to ich hash-Code-y są  równe. Ale, jeżeli hashCody są równe to metodą equals() może zwracać true lub false.** 
 
 W krótkich, żołnierskich słowach: jeżeli porównanie hashCode() obu obiektów zwraca false to obiekty są różne. Jeżeli zwraca true, wówczas spór rozstrzyga metoda equals().
 
