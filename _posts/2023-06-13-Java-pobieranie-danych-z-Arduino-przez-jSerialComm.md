@@ -3,7 +3,7 @@ published: false
 ---
 ## Jak odczytać w Javie dane wysyłane przez mikrokontroler platformy Arduino.
 
-Projekt mojego mikroserwisu pogodowego posiada w kontrolerze endpoint zwracający między innymi bieżącą temperaturę na zewnątrz. Aktualnie temperatura ta jest pobierana z innego serwisu pogodowego (openweather.com -polecam, bardzo dobrze udokumentowane API)z którym łączy się mój serwis. Po zmapowaniu odpowiedzi z openweather na moją encje, odpowiedź wraca do klienta. Postanowiłem pójść krok dalej i jako alternatywne źródło danych wykorzystać własny czujnik temperatury. A raczej to czujnik będzie głownym źródłem a openweather backupem. 
+Projekt mojego mikroserwisu pogodowego posiada w kontrolerze endpoint zwracający między innymi bieżącą temperaturę na zewnątrz. Aktualnie temperatura ta jest pobierana z innego serwisu pogodowego (openweather.com -polecam, bardzo dobrze udokumentowane API)z którym łączy się mój serwis. Po zmapowaniu odpowiedzi z openweather na moją encje, odpowiedź wraca do klienta. Postanowiłem pójść krok dalej i jako alternatywne źródło danych wykorzystać własny czujnik temperatury. A raczej od teraz to czujnik będzie głownym źródłem a openweather backupem. 
 
 Wykorzystałem do tego platformę Arduino Uno oraz czujnik temperatury (i wilgotności w jednym) DHT11. Na załączonym zdjęciu to ten niebieski elemennt. Poza nim znajduje się jeszcze fotorezytor do pomiarów natężenia oświetlenia - ale to temat na osobne zajęcia.
 
