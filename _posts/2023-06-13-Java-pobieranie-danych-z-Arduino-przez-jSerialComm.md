@@ -19,7 +19,7 @@ import java.io.InputStream;
 @Service
 public class ArduinoDataReceiver {
     private static final int PORT_NO = 0;
-    private static final int RECEIVING_PACKET_SEQUENCE_MILLIS = 1000;
+    private static final int RECEIVING_PACKET_SEQUENCE_MILLIS = 2000;
     private final StringBuilder measurment;
     private final SerialPort comPort = SerialPort.getCommPorts()[PORT_NO];
 
@@ -61,6 +61,9 @@ public class ArduinoDataReceiver {
 }
 
 {% endhighlight %}
+
+
+napisac teraz tutaj jakie jsekwesncji wysyła dane czujnik,potem dlaczego i po co ten czas uwzgledniam, 
 
 
 
