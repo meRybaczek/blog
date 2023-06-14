@@ -7,7 +7,8 @@ Projekt mojego mikroserwisu pogodowego posiada w kontrolerze endpoint zwracając
 
 Wykorzystałem do tego platformę Arduino Uno oraz czujnik temperatury (i wilgotności w jednym) DHT11. Na załączonym zdjęciu to ten niebieski elemennt. Poza nim znajduje się jeszcze fotorezytor do pomiarów natężenia oświetlenia - ale to temat na osobne zajęcia.
 
-Serwis zbudowany jest w Javie, z wykorzystaniem Spring Boot. Jako zależność dodałem bibliotekę  jSerialComm, dzięki której dane z Arduino trafią wprost do serwisu. jSerialComm jest biblioteką Javy, która umożliwia komunikację z urządzeniami szeregowymi (RS-232/UART) za pomocą interfejsu szeregowego. Biblioteka jSerialComm dostarcza prosty interfejs API, który umożliwia otwieranie portów szeregowych, przesyłanie danych oraz odbieranie danych z urządzenia. Ja skorzystam jedynie z odbierania. Klasa serwisu obsługująca pobieranie danych wygląda tak:
+Serwis zbudowany jest w Javie, z wykorzystaniem Spring Boot. Jako zależność dodałem bibliotekę  jSerialComm, dzięki której dane z Arduino trafią wprost do serwisu. jSerialComm jest biblioteką Javy, która umożliwia komunikację z urządzeniami szeregowymi (RS-232/UART) za pomocą interfejsu szeregowego. Biblioteka jSerialComm dostarcza prosty interfejs API, który umożliwia otwieranie portów szeregowych, przesyłanie danych oraz odbieranie danych z urządzenia. Ja skorzystam jedynie z odbierania. 
+Klasa serwisu obsługująca pobieranie danych wygląda tak:
 
 {% highlight java %}
 
@@ -63,7 +64,7 @@ public class ArduinoDataReceiver {
 {% endhighlight %}
 
 
-Czujnink DHT pozwala na pomiary w odtępie 2s, dlatego też mikrokontroler na płytce Arduino został tak zapropogramowany aby wysyłał pakiet danych w interwale 2s. Idąć w ślad za tym sekwencja odczytu danych z portu również uwzględnia ten czas. 
+Czujnink DHT11 pozwala na pomiary w odtępie 2s, dlatego też mikrokontroler na płytce Arduino został tak zapropogramowany aby wysyłał pakiet danych w interwale 2s. Idąć w ślad za tym sekwencja odczytu danych z portu również uwzględnia ten czas. 
 Statyczna metoda SerialPort.getCommPorts() zwraca talicę dostępnych portów. W moim przypadku mam tylko jeden, więc znajduje się on pod indeksem [0], i przypisuję go do zmiennej SerialPort comPort.
 
 Jeżeli u siebie macie więcej portów, można przeiterować tablicę portów, wyciągając z niej np nazwy portów, metodą getSystemPortName(), i wówczas przypisać odpowiedni port do zmiennej comPort.
