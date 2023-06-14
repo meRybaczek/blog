@@ -3,11 +3,11 @@ published: false
 ---
 ## Jak odczytać w Javie dane wysyłane przez mikrokontroler platformy Arduino.
 
-Projekt mojego mikroserwisu pogodowego posiada w kontrolerze endpoint zwracający między innymi bieżącą temperaturę na zewnątrz. Aktualnie temperatura ta jest pobierana z innego serwisu pogodowego (openweather.com -polecam, bardzo dobrze udokumentowane API)z którym łączy się mój serwis. Po zmapowaniu odpowiedzi z openweather na moją encje, odpowiedź wraca do klienta. Postanowiłem pójść krok dalej i jako alternatywne źródło danych wykorzystać własny czujnik temperatury. A raczej od teraz to czujnik będzie głownym źródłem a openweather backupem. 
+Projekt mojego mikroserwisu pogodowego posiada w kontrolerze endpoint zwracający między innymi bieżącą temperaturę na zewnątrz. Aktualnie temperatura ta jest pobierana z wykorzystaniem zewnętrznego API openweather.com,z którym łączy się mój serwis. Po zmapowaniu odpowiedzi z openweather na moją encje, odpowiedź wraca do klienta. Postanowiłem pójść krok dalej i jako alternatywne źródło danych wykorzystać własny czujnik temperatury. A raczej od teraz to czujnik będzie głownym źródłem a openweather backupem. 
 
 Wykorzystałem do tego platformę Arduino Uno oraz czujnik temperatury (i wilgotności w jednym) DHT11. Na załączonym zdjęciu to ten niebieski elemennt. Poza nim znajduje się jeszcze fotorezytor do pomiarów natężenia oświetlenia - ale to temat na osobne zajęcia.
 
-Serwis zbudowany jest w Javie, z wykorzystaniem Spring Boot. Jako zależność dodałem bibliotekę  jSerialComm, dzięki której dane z Arduino trafią wprost do serwisu. jSerialComm jest biblioteką Javy, która umożliwia komunikację z urządzeniami szeregowymi (RS-232/UART) za pomocą interfejsu szeregowego. Biblioteka jSerialComm dostarcza prosty interfejs API, który umożliwia otwieranie portów szeregowych, przesyłanie danych oraz odbieranie danych z urządzenia. Ja skorzysta jedynie z odbierania. Klasa serwisu obsługująca pobieranie danych wygląda tak:
+Serwis zbudowany jest w Javie, z wykorzystaniem Spring Boot. Jako zależność dodałem bibliotekę  jSerialComm, dzięki której dane z Arduino trafią wprost do serwisu. jSerialComm jest biblioteką Javy, która umożliwia komunikację z urządzeniami szeregowymi (RS-232/UART) za pomocą interfejsu szeregowego. Biblioteka jSerialComm dostarcza prosty interfejs API, który umożliwia otwieranie portów szeregowych, przesyłanie danych oraz odbieranie danych z urządzenia. Ja skorzystam jedynie z odbierania. Klasa serwisu obsługująca pobieranie danych wygląda tak:
 
 {% highlight java %}
 
@@ -63,7 +63,15 @@ public class ArduinoDataReceiver {
 {% endhighlight %}
 
 
-napisac teraz tutaj jakie jsekwesncji wysyła dane czujnik,potem dlaczego i po co ten czas uwzgledniam, 
+Czujnink DHT pozwala na pomiary w odtępie 2s, dlatego też mikrokontroler na płytce Arduino został tak zapropogramowany aby wysyłał pakiet danych w interwale 2s. Idąć w ślad za tym sekwencja odczytu danych z portu również uwzględnia ten czas. 
+Statyczna metoda SerialPort.getCommPorts() zwraca talicę dostępnych portów. W moim przypadku mam tylko jeden, więc znajduje się on pod indeksem [0], i przypisuję go do zmiennej SerialPort comPort.
+Jeżeli u siebie macie więcej portów, można przeiterować tablicę portów, wyciągając z niej np nazwy portów, metodą getSystemPortName(), i wówczas przypisać odpowiedni port do zmiennej comPort.
+
+Kolejnym krokiem jest otwarcie portu comPort.openPort() i ustawienie timeout-ów(opcjonalnie). Pierwszy pakiet danych w moim przypadku zazwyczaj był nieprawidłowy. Spowodowane to było niezsynchonizowaniem uruchomienia strumienia wejścia (comPort.getInputStream()) z otrzymanym już pakietem danych. Bufor zawierał wówczas niepełne dane, co generowało inicjacyjny błąd. Pomogła metoda flushIOBuffers(), która opróżniła bufor. 
+Następnie prywatna metoda getBytesPerPacket() sprawdza ile bajtów zawiera odbierany pakiet danych, po to aby określić długość pętli odczytującej bajt po bajcie. Zanim metoda zostaje uruchomiona czekam 2s aby pakiet zdążył się wysłać, inaczej metoda ta zwróciłaby 0.
+Na otwartym strumieniu w pętli odczytywany jest bajt metodą in.read() i rzutowany do char, który łańcuchowo dopisywany jest do obiektu StringBuilder measurment.
+Zamykamy port, zamykamy strumień wejścia i tyle. Stringbuilder zawiera ciąg znaków, który następnie możemy odpowiednio zmapować.  
+
 
 
 
