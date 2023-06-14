@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 ---
 ## Jak odczytać w Javie dane wysyłane przez mikrokontroler platformy Arduino.
 
