@@ -8,13 +8,13 @@ Projekt mojego mikroserwisu pogodowego posiada w kontrolerze endpoint zwracając
 Wykorzystałem do tego platformę Arduino Uno oraz czujnik temperatury (i wilgotności w jednym) DHT11. Na załączonym zdjęciu to ten niebieski element. Poza nim znajduje się jeszcze fotorezytor do pomiarów natężenia oświetlenia - ale to temat na osobne zajęcia.
 
 Serwis zbudowany jest w Javie, z wykorzystaniem Spring Boot. Jako zależność dodałem bibliotekę  jSerialComm, dzięki której dane z Arduino trafią wprost do serwisu. 
-
+{% highlight java %}
 		<dependency>
 			<groupId>com.fazecast</groupId>
 			<artifactId>jSerialComm</artifactId>
 			<version>2.9.3</version>
 		</dependency>
-
+{% endhighlight %}
 jSerialComm jest biblioteką Javy, która umożliwia komunikację z urządzeniami szeregowymi (RS-232/UART) za pomocą interfejsu szeregowego. Biblioteka jSerialComm dostarcza prosty interfejs API, który umożliwia otwieranie portów szeregowych, przesyłanie danych oraz odbieranie danych z urządzenia. Ja skorzystam jedynie z odbierania. 
 Klasa serwisu obsługująca pobieranie danych wygląda tak:
 
