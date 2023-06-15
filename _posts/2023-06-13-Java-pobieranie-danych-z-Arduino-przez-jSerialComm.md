@@ -72,10 +72,10 @@ public class ArduinoDataReceiver {
 {% endhighlight %}
 
 
-Czujnink DHT11 pozwala na pomiary w odtępie 2s, dlatego też mikrokontroler na płytce Arduino został tak zapropogramowany aby wysyłał pakiet danych w interwale 2s. Idąć w ślad za tym, sekwencja odczytu danych z portu również uwzględnia ten czas. 
+Czujnink DHT11 pozwala na pomiary w odstępie 2s, dlatego też mikrokontroler na płytce Arduino został tak zapropogramowany aby wysyłał pakiet danych w interwale 2s. Idąć w ślad za tym, sekwencja odczytu danych z portu również uwzględnia ten czas. 
 Statyczna metoda SerialPort.getCommPorts() zwraca talicę dostępnych portów. W moim przypadku mam tylko jeden, więc znajduje się on pod indeksem [0], i przypisuję go do zmiennej SerialPort comPort.
 
-Jeżeli u siebie masz więcej portów, można przeiterować tablicę portów, wyciągając z niej np nazwy portów, metodą getSystemPortName(), i wówczas przypisać odpowiedni port do zmiennej comPort.
+Jeżeli u siebie masz więcej portów, można przeiterować tablicę portów, wyciągając z niej np nazwy portów, metodą getSystemPortName(), i przypisać odpowiedni port do zmiennej comPort.
 
 Kolejnym krokiem jest otwarcie portu comPort.openPort() i ustawienie timeout-ów(opcjonalnie). Pierwszy pakiet danych w moim przypadku zazwyczaj był nieprawidłowy. Spowodowane to było niezsynchonizowaniem uruchomienia strumienia wejścia (comPort.getInputStream()) z otrzymanym już pakietem danych. Bufor zawierał wówczas niepełne dane, co generowało inicjacyjny błąd. Pomogła metoda flushIOBuffers(), która opróżniła bufor. 
 
