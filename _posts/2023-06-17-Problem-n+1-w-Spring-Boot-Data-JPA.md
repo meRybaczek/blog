@@ -199,15 +199,17 @@ Problem n+1 rozwiązany. Wprawdzie dane z tabeli podrzędnej pobrane zostałyby 
 ## Metoda 2.
 Jeżeli powyższy sposób nie końca odpowiada, i nie zawsze będziemy potrzebowali, aby dane z tabeli podrzędnej były pobierane, możemy przyjżeć się innemu rozwiązaniu. Pomoże nam w tym adnotacja pochodząca już bezpośrednio z Hibernate @Fetch i odpowiedni FetchMode.
 
-Dodaję w encji nadrzędnej BookOrder adnotacje:
+Usuwam w repozytorium adnotację @Query a dodaję w encji nadrzędnej BookOrder adnotacje @Fetch:
 
     @OneToMany
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "BOOK_ORDER_ID")
     List<Book> books = new ArrayList<>();
 
+W logach widać teraz dwa zapytania:
   
-  
+Hibernate: select b1_0.id,b1_0.name,b1_0.user_id from book_order b1_0 where b1_0.user_id=?
+Hibernate: select b2_0.book_order_id,b2_0.id,b2_0.name,b2_0.price from book b2_0 where b2_0.book_order_id in(select b1_0.id from book_order b1_0 where b1_0.user_id=?)
   
   
 Tym razem i zadziała Lazy Loading i n+1 nie wystąpiło. Wprawdzie mamy dwa zapytania ale powinna ta metoda zad
