@@ -1,7 +1,7 @@
 ---
 published: false
 ---
-
+![]({{site.baseurl}}/images/znaknplus1.png)
 
 W dzisiejszych aplikacjach opartych na Spring Boot Data JPA, efektywne zarządzanie relacjami i pobieranie danych jest kluczowym aspektem projektowania i optymalizacji wydajności. Jednym z często spotykanych problemów, który może negatywnie wpływać na wydajność aplikacji, jest tzw. problem n+1.
 
