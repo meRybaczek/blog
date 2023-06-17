@@ -83,7 +83,17 @@ public class Book {
     }
 }
 {% endhighlight %}
+  
+  
+Klasa repozytorium zawiera jedną metodę, którą wykorzystamy w klasie testowej:
 
+{% highlight java %}
+public interface BookOrderRepository extends JpaRepository<BookOrder, Long> {
+    List<BookOrder> findByUserId(Long userId);
+}
+{% endhighlight %}
+  
+    
 Do utworzenia tabel oraz wypełnienia ich danymi testowymi skorzystałem z narzędzia Flyway (zależność do Flyway można znaleźć w Spring initializer):
 
 Tworzę obie tabele:
@@ -118,7 +128,30 @@ INSERT INTO BOOK (BOOK_ORDER_ID, NAME, PRICE) VALUES (7, 'Book11', 54.22);
 INSERT INTO BOOK (BOOK_ORDER_ID, NAME, PRICE) VALUES (8, 'Book12', 234.22);
   
 
+W klasie testowej, przeprowadzamy jedną opercję, szukam ile książek w sumie złożył klient o userId=1:
+  
+{% highlight java %}
+@SpringBootTest
+public class SomeTest {
+    @Autowired
+    private BookOrderRepository bookOrderRepository;
 
+    @Test
+    @Transactional
+    void shouldExtractItemsFromOrders(){
+
+        List<BookOrder> summaries = bookOrderRepository.findByUserId(1L);
+
+        List<Book> list = summaries.stream()
+                .map(BookOrder::getBooks)
+                .flatMap(Collection::stream)
+                .toList();
+
+        assertEquals(10,list.size());
+    }
+  }
+{% endhighlight %}
+  
 
 
 
