@@ -194,7 +194,7 @@ Uruchamiając test ponownie widzimy już tylko jedno zapytanie:
   
 Hibernate: select distinct b1_0.id,b2_0.book_order_id,b2_0.id,b2_0.name,b2_0.price,b1_0.name,b1_0.user_id from book_order b1_0 join book b2_0 on b1_0.id=b2_0.book_order_id where b1_0.user_id=?
   
-Problem n+1 rozwiązany. Wprawdzie dane z tabeli podrzędnej pobierane zostają bez ich odwołania (ładownie leniwe tutaj nie zadziałało) ale przynajmniej wykonało się to optymalnie jednym zapytaniem.
+Problem n+1 rozwiązany. Wprawdzie dane z tabeli podrzędnej pobierane zostałyby nawet bez odwołania się do nich (ładownie leniwe tutaj nie zadziałało) ale przynajmniej wykonało się to optymalnie jednym zapytaniem.
   
 ## Metoda 2.
 Jeżeli powyższy sposób nie końca odpowiada, można to rozwiązać jeszcze inaczej. 
