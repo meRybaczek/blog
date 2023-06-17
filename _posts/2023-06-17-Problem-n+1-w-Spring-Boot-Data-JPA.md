@@ -128,7 +128,7 @@ INSERT INTO BOOK (BOOK_ORDER_ID, NAME, PRICE) VALUES (7, 'Book11', 54.22);
 INSERT INTO BOOK (BOOK_ORDER_ID, NAME, PRICE) VALUES (8, 'Book12', 234.22);
   
 
-W klasie testowej, przeprowadzamy jedną opercję, szukam ile książek w sumie złożył klient o userId=1:
+W klasie testowej, przeprowadzamy jedną opercję, szukam ile książek w sumie zakupił klient o userId=1:
   
 {% highlight java %}
 @SpringBootTest
@@ -152,6 +152,39 @@ public class SomeTest {
   }
 {% endhighlight %}
   
+
+## Logowanie zapytań SQL
+  
+Aby unaocznić, ile faktycznie zapytań Hibernate wysłał do bazy danych w pliku properties należy ustawić właściwość:
+  
+  spring.jpa.show-sql=true
+  
+
+Po uruchomieniu test w logach zobaczymy, iż Hibernate wykonał aż 7 zapytań:
+  
+Hibernate: select b1_0.id,b1_0.name,b1_0.user_id from book_order b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.book_order_id,b1_0.id,b1_0.name,b1_0.price from book b1_0 where b1_0.book_order_id=?
+Hibernate: select b1_0.book_order_id,b1_0.id,b1_0.name,b1_0.price from book b1_0 where b1_0.book_order_id=?
+Hibernate: select b1_0.book_order_id,b1_0.id,b1_0.name,b1_0.price from book b1_0 where b1_0.book_order_id=?
+Hibernate: select b1_0.book_order_id,b1_0.id,b1_0.name,b1_0.price from book b1_0 where b1_0.book_order_id=?
+Hibernate: select b1_0.book_order_id,b1_0.id,b1_0.name,b1_0.price from book b1_0 where b1_0.book_order_id=?
+Hibernate: select b1_0.book_order_id,b1_0.id,b1_0.name,b1_0.price from book b1_0 where b1_0.book_order_id=?
+  
+Pierwsze zapytanie jest o wszystkie zamówienia dla klienta userId=1, było ich 6 i dodatkowo dla każdego z 6 zamówień zostało wykonane zapytanie o listę książek. Mamy przykłd niewydajnego problemu n+1 (6+1 = 7)
+  
+W relacji OneToMany dane z tabeli zależnej są "dociągane" gdy następuje do nich odwołanie na otwartej transakcji. Jest to tzw Lazy Loading. Takie ustawienie jest domyślne dla tego typu relacji. 
+  
+Sprawdźmy zatem ile będzie zapytań gdy zmienimy w klasie encji BookOrder Lazy na Eager:
+ 
+  	@OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "BOOK_ORDER_ID")
+    List<Book> books = new ArrayList<>();
+  
+Nie będę wklejał logów ponownie, ale uwierzcie, że są identyczne jak w przypadku Lazy. Taka sama liczba zapytań wysłanych do bazy danych. Nie dość, że dane z tabeli zależnej zostałyby pobrane nawet bez odwołania się do nich, to dodatkowo problem n+1 nie zniknął.
+  
+## Rozwiązanie problemu
+  
+
 
 
 
