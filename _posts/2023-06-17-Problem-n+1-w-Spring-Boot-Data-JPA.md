@@ -197,7 +197,7 @@ Hibernate: select distinct b1_0.id,b2_0.book_order_id,b2_0.id,b2_0.name,b2_0.pri
 Problem n+1 rozwiązany. Wprawdzie dane z tabeli podrzędnej pobrane zostałyby nawet bez odwołania się do nich (ładownie leniwe tutaj nie zadziałało) ale przynajmniej wykonało się to optymalnie jednym zapytaniem.
   
 ## Metoda 2.
-Jeżeli powyższy sposób nie końca odpowiada, i nie zawsze będziemy potrzebowali, aby dane z tabeli podrzędnej były pobierane, możemy przyjżeć się innemu rozwiązaniu. Pomoże nam w tym adnotacja pochodząca już bezpośrednio z Hibernate @Fetch i odpowiedni FetchMode.
+Jeżeli powyższy sposób nie końca odpowiada, i nie zawsze będziemy potrzebowali, aby dane z tabeli podrzędnej były pobierane, możemy przyjżeć się innemu rozwiązaniu. Pomoże nam w tym adnotacja pochodząca już bezpośrednio z Hibernate @Fetch oraz odpowiedni FetchMode.
 
 Usuwam w repozytorium adnotację @Query a dodaję w encji nadrzędnej BookOrder adnotacje @Fetch:
 
@@ -212,7 +212,9 @@ Hibernate: select b1_0.id,b1_0.name,b1_0.user_id from book_order b1_0 where b1_0
 Hibernate: select b2_0.book_order_id,b2_0.id,b2_0.name,b2_0.price from book b2_0 where b2_0.book_order_id in(select b1_0.id from book_order b1_0 where b1_0.user_id=?)
   
   
-Tym razem i zadziała Lazy Loading i n+1 nie wystąpiło. Wprawdzie mamy dwa zapytania ale powinna ta metoda zad
+Pierwsze zapytanie jest o zamówienia, drugie zapytania pojawiło się gdy następiło odwołanie do tabeli podrzędnej. Drugie zapytanie widać, że korzysta z wyniku podzapytania. 
+  
+Mamy zatem przykład leniwego ładowania oraz braku problemy n+1. Powinno to zadowolić tego, któremu nie do końca pasowało rozwiązanie pierwsze. 
   
 
 
