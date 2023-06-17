@@ -182,7 +182,27 @@ Sprawdźmy zatem ile będzie zapytań gdy zmienimy w klasie encji BookOrder Lazy
   
 Nie będę wklejał logów ponownie, ale uwierzcie, że są identyczne jak w przypadku Lazy. Taka sama liczba zapytań wysłanych do bazy danych. Nie dość, że dane z tabeli zależnej zostałyby pobrane nawet bez odwołania się do nich, to dodatkowo problem n+1 nie zniknął.
   
-## Rozwiązanie problemu
+## Rozwiązanie problemu n+1
+  
+**Metoda 1.**
+Problem możemy rozwiązać wymuszając zapytanie z łączeniem obu tabel. Możemy zatem zmienić naszą metodę w repozytorium:
+  
+  	@Query("select distinct b from BookOrder b join fetch b.books where b.userId = ?1")
+    List<BookOrder> findByUserId(Long userId);
+  
+Uruchamiając test ponownie widzimy już tylko jedno zapytanie:
+  
+Hibernate: select distinct b1_0.id,b2_0.book_order_id,b2_0.id,b2_0.name,b2_0.price,b1_0.name,b1_0.user_id from book_order b1_0 join book b2_0 on b1_0.id=b2_0.book_order_id where b1_0.user_id=?
+  
+Problem n+1 rozwiązany. Wprawdzie dane z tabeli podrzędnej pobierane zostają bez ich odwołania (ładownie leniwe tutaj nie zadziałało) ale przynajmniej wykonało się to optymalnie jednym zapytaniem.
+  
+## Metoda 2.
+Jeżeli powyższy sposób nie końca odpowiada, można to rozwiązać jeszcze inaczej. 
+  
+  
+  
+  
+Tym razem i zadziała Lazy Loading i n+1 nie wystąpiło. Wprawdzie mamy dwa zapytania ale powinna ta metoda zad
   
 
 
