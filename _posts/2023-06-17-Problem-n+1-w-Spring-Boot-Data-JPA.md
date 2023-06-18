@@ -229,4 +229,5 @@ Pierwsze zapytanie jest o zamówienia, drugie zapytania pojawiło się gdy nast�
   
 Mamy zatem przykład leniwego ładowania oraz braku problemu n+1. Powinno to zadowolić tego, któremu nie do końca pasowało rozwiązanie pierwsze.
   
-Dobór odpowiedniego rozwiązania problemu n+1 zależy od danego przypadku. Jeżeli wiemy, że dane z tabeli zależnej zawsze będą nam potrzebne, możemy skorzystać z dodatkowego @Query z joinem. Jeżeli do końca nie wiemy, czy dane te użyjemy w logice, dobrym wyjściem będzie zastosowanie hibernatowego @Fetch z opcją SUBSELECT. 
+Czy walka z problemem n+1 jest zawsze konieczna? No nie zawsze. Wszystko jak zwykle zależy od danego przypadku. Gdy danych mamy na tyle mało, że wystąpienia problemu n+1 nasze zasoby nawet nie odczują, warto zostawić opcję domyślną. Jeżeli wiemy, że dane z tabeli zależnej zawsze będą nam potrzebne, możemy skorzystać z dodatkowego @Query z joinem. Jeżeli do końca nie wiemy, czy dane te użyjemy w logice, dobrym wyjściem będzie zastosowanie hibernatowego @Fetch z opcją SUBSELECT. 
+Czasem nawet dobrym pomysłem może się okazać zwykłe zmapowanie naszej encji na odpowiedni obiekt DTO aby uniknąc "dociągania" niepotrzebnych danych zależnych.
