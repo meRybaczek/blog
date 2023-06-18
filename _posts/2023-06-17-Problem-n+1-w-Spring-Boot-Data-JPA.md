@@ -225,6 +225,8 @@ Hibernate: select b1_0.id,b1_0.name,b1_0.user_id from book_order b1_0 where b1_0
 Hibernate: select b2_0.book_order_id,b2_0.id,b2_0.name,b2_0.price from book b2_0 where b2_0.book_order_id in(select b1_0.id from book_order b1_0 where b1_0.user_id=?)
 {% endhighlight %}   
   
-Pierwsze zapytanie jest o zamówienia, drugie zapytania pojawiło się gdy następiło odwołanie do tabeli podrzędnej. Drugie zapytanie widać, że korzysta z wyniku podzapytania. 
+Pierwsze zapytanie jest o zamówienia, drugie zapytania pojawiło się gdy nastąpiło odwołanie do tabeli podrzędnej. Drugie zapytanie widać, że korzysta z wyniku podzapytania. 
   
 Mamy zatem przykład leniwego ładowania oraz braku problemu n+1. Powinno to zadowolić tego, któremu nie do końca pasowało rozwiązanie pierwsze.
+  
+Dobór odpowiedniego rozwiązania problemu n+1 zależy od danego przypadku. Jeżeli wiemy, że dane z tabeli zależnej zawsze będą nam potrzebne, możemy skorzystać z dodatkowego @Query z joinem. Jeżeli do końca nie wiemy, czy dane te użyjemy w logice, dobrym wyjściem będzie zastosowanie hibernatowego @Fetch z opcją SUBSELECT. 
