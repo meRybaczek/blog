@@ -227,4 +227,4 @@ Hibernate: select b2_0.book_order_id,b2_0.id,b2_0.name,b2_0.price from book b2_0
   
 Pierwsze zapytanie jest o zamówienia, drugie zapytania pojawiło się gdy następiło odwołanie do tabeli podrzędnej. Drugie zapytanie widać, że korzysta z wyniku podzapytania. 
   
-Mamy zatem przykład leniwego ładowania oraz braku problemy n+1. Powinno to zadowolić tego, któremu nie do końca pasowało rozwiązanie pierwsze.
+Mamy zatem przykład leniwego ładowania oraz braku problemu n+1. Powinno to zadowolić tego, któremu nie do końca pasowało rozwiązanie pierwsze.
