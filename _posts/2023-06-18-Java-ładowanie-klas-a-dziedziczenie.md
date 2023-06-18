@@ -48,13 +48,13 @@ public class Beetle extends Insect {
 No i zagadaka, co zobaczymy jak pierwsze po uruchomieniu metody main?
 Nie, nie jest to wydruk z System.out-a.
 
-static Insect.x1 zainicjowana
-static Beetle.x2 zainicjowana
-Konstruktor klasy Beetle:
-i= 9 j= 0
-Beetle.k zainicjowana
-k = 47
-j = 39
+	static Insect.x1 zainicjowana
+	static Beetle.x2 zainicjowana
+	Konstruktor klasy Beetle:
+	i= 9 j= 0
+	Beetle.k zainicjowana
+	k = 47
+	j = 39
 
 
 A teraz postaram się wytłumaczyć kolejność działań inicjalizacji i wczytywania klas.
