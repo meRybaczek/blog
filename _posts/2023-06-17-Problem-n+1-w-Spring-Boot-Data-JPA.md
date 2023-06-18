@@ -101,12 +101,14 @@ Do utworzenia tabel oraz wypełnienia ich danymi testowymi skorzystałem z narz�
 Tworzę obie tabele:
   
 V1__Create_Tables.sql:  
+<pre><code class="java">/* 
 CREATE TABLE BOOK_ORDER(ID BIGINT AUTO_INCREMENT PRIMARY KEY, USER_ID BIGINT, NAME VARCHAR(255));
 CREATE TABLE BOOK(ID BIGINT AUTO_INCREMENT PRIMARY KEY,BOOK_ORDER_ID BIGINT,FOREIGN KEY (BOOK_ORDER_ID) REFERENCES BOOK_ORDER, NAME VARCHAR(255), PRICE DOUBLE);
-  
+</code></pre>
 Oraz wypełniam je danymi testowymi:
 
 V2__data.sql:
+<pre><code class="java">/* 
 INSERT INTO BOOK_ORDER (USER_ID, NAME) VALUES (1, 'Order 1');
 INSERT INTO BOOK_ORDER (USER_ID, NAME) VALUES (2, 'Order 2');
 INSERT INTO BOOK_ORDER (USER_ID, NAME) VALUES (1, 'Order 3');
@@ -128,7 +130,7 @@ INSERT INTO BOOK (BOOK_ORDER_ID, NAME, PRICE) VALUES (5, 'Book9', 23.34);
 INSERT INTO BOOK (BOOK_ORDER_ID, NAME, PRICE) VALUES (6, 'Book10', 23.22);
 INSERT INTO BOOK (BOOK_ORDER_ID, NAME, PRICE) VALUES (7, 'Book11', 54.22);
 INSERT INTO BOOK (BOOK_ORDER_ID, NAME, PRICE) VALUES (8, 'Book12', 234.22);
-  
+</code></pre>  
 
 W klasie testowej, przeprowadzamy jedną opercję, szukam ile książek w sumie zakupił klient o userId=1:
   
@@ -216,9 +218,4 @@ Hibernate: select b2_0.book_order_id,b2_0.id,b2_0.name,b2_0.price from book b2_0
   
 Pierwsze zapytanie jest o zamówienia, drugie zapytania pojawiło się gdy następiło odwołanie do tabeli podrzędnej. Drugie zapytanie widać, że korzysta z wyniku podzapytania. 
   
-Mamy zatem przykład leniwego ładowania oraz braku problemy n+1. Powinno to zadowolić tego, któremu nie do końca pasowało rozwiązanie pierwsze. 
-  
-
-
-
-
+Mamy zatem przykład leniwego ładowania oraz braku problemy n+1. Powinno to zadowolić tego, któremu nie do końca pasowało rozwiązanie pierwsze.
