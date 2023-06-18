@@ -144,9 +144,9 @@ public class SomeTest {
     @Transactional
     void shouldCountBooksFromUserId(){
 
-        List<BookOrder> summaries = bookOrderRepository.findByUserId(1L);
+        List<BookOrder> byUserId = bookOrderRepository.findByUserId(1L);
 
-        List<Book> list = summaries.stream()
+        List<Book> list = byUserId.stream()
                 .map(BookOrder::getBooks)
                 .flatMap(Collection::stream)
                 .toList();
