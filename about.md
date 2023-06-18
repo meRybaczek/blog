@@ -4,12 +4,12 @@ title: About
 permalink: /about/
 ---
 
-Some information about you!
+Electric, electronic, colorimetric enthusiast and engaged to Java programming recently ;)
 
 ### More Information
 
-A place to include any other types of information that you'd like to include about yourself.
+Ready to be hire as a Junior Java Developer
 
 ### Contact me
 
-[email@domain.com](mailto:email@domain.com)
+linkedin: /wojciech-rybaczek-1401821a5
