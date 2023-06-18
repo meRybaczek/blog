@@ -165,7 +165,7 @@ Aby unaocznić, ile faktycznie zapytań Hibernate wysłał do bazy danych w plik
   
 
 Po uruchomieniu test w logach zobaczymy, iż Hibernate wykonał aż 7 zapytań:
-  
+<pre><code class="java">/*   
 Hibernate: select b1_0.id,b1_0.name,b1_0.user_id from book_order b1_0 where b1_0.user_id=?
 Hibernate: select b1_0.book_order_id,b1_0.id,b1_0.name,b1_0.price from book b1_0 where b1_0.book_order_id=?
 Hibernate: select b1_0.book_order_id,b1_0.id,b1_0.name,b1_0.price from book b1_0 where b1_0.book_order_id=?
@@ -173,7 +173,7 @@ Hibernate: select b1_0.book_order_id,b1_0.id,b1_0.name,b1_0.price from book b1_0
 Hibernate: select b1_0.book_order_id,b1_0.id,b1_0.name,b1_0.price from book b1_0 where b1_0.book_order_id=?
 Hibernate: select b1_0.book_order_id,b1_0.id,b1_0.name,b1_0.price from book b1_0 where b1_0.book_order_id=?
 Hibernate: select b1_0.book_order_id,b1_0.id,b1_0.name,b1_0.price from book b1_0 where b1_0.book_order_id=?
-  
+</code></pre>   
 Pierwsze zapytanie jest o wszystkie zamówienia dla klienta userId=1, było ich 6 i dodatkowo dla każdego z 6 zamówień zostało wykonane zapytanie o listę książek. Mamy przykłd niewydajnego problemu n+1 (6+1 = 7)
   
 W relacji OneToMany dane z tabeli zależnej są "dociągane" gdy następuje do nich odwołanie na otwartej transakcji. Jest to tzw Lazy Loading. Takie ustawienie jest domyślne dla tego typu relacji. 
