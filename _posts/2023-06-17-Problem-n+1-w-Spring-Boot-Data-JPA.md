@@ -101,14 +101,15 @@ Do utworzenia tabel oraz wypełnienia ich danymi testowymi skorzystałem z narz�
 Tworzę obie tabele:
   
 V1__Create_Tables.sql:  
-<pre><code class="java">/* 
+{% highlight java %} 
 CREATE TABLE BOOK_ORDER(ID BIGINT AUTO_INCREMENT PRIMARY KEY, USER_ID BIGINT, NAME VARCHAR(255));
 CREATE TABLE BOOK(ID BIGINT AUTO_INCREMENT PRIMARY KEY,BOOK_ORDER_ID BIGINT,FOREIGN KEY (BOOK_ORDER_ID) REFERENCES BOOK_ORDER, NAME VARCHAR(255), PRICE DOUBLE);
-</code></pre>
+{% endhighlight %}
+  
 Oraz wypełniam je danymi testowymi:
 
 V2__data.sql:
-<pre><code class="java">/* 
+{% highlight java %}
 INSERT INTO BOOK_ORDER (USER_ID, NAME) VALUES (1, 'Order 1');
 INSERT INTO BOOK_ORDER (USER_ID, NAME) VALUES (2, 'Order 2');
 INSERT INTO BOOK_ORDER (USER_ID, NAME) VALUES (1, 'Order 3');
@@ -130,7 +131,7 @@ INSERT INTO BOOK (BOOK_ORDER_ID, NAME, PRICE) VALUES (5, 'Book9', 23.34);
 INSERT INTO BOOK (BOOK_ORDER_ID, NAME, PRICE) VALUES (6, 'Book10', 23.22);
 INSERT INTO BOOK (BOOK_ORDER_ID, NAME, PRICE) VALUES (7, 'Book11', 54.22);
 INSERT INTO BOOK (BOOK_ORDER_ID, NAME, PRICE) VALUES (8, 'Book12', 234.22);
-</code></pre>  
+{% endhighlight %}
 
 W klasie testowej, przeprowadzamy jedną opercję, szukam ile książek w sumie zakupił klient o userId=1:
   
@@ -181,11 +182,11 @@ W relacji OneToMany dane z tabeli zależnej są "dociągane" gdy następuje do n
   
 Sprawdźmy zatem ile będzie zapytań gdy zmienimy w klasie encji BookOrder Lazy na Eager:
   
-<pre><code class="java">/*   
+{% highlight java %}  
 @OneToMany(fetch = FetchType.EAGER)
 @JoinColumn(name = "BOOK_ORDER_ID")
 List<Book> books = new ArrayList<>();
-</code></pre>     
+{% endhighlight %}   
 
 Nie będę wklejał logów ponownie, ale uwierzcie, że są identyczne jak w przypadku Lazy. Taka sama liczba zapytań wysłanych do bazy danych. Nie dość, że dane z tabeli zależnej zostałyby pobrane nawet bez odwołania się do nich, to dodatkowo problem n+1 nie zniknął.
   
@@ -193,16 +194,16 @@ Nie będę wklejał logów ponownie, ale uwierzcie, że są identyczne jak w prz
   
 **Metoda 1.**
 Problem możemy rozwiązać wymuszając zapytanie z łączeniem obu tabel. Możemy zatem zmienić naszą metodę w repozytorium:
-<pre><code class="java">/*  
+{% highlight java %}  
 @Query("select distinct b from BookOrder b join fetch b.books where b.userId = ?1")
 List<BookOrder> findByUserId(Long userId);
-</code></pre> 
+{% endhighlight %} 
 
 Uruchamiając test ponownie widzimy już tylko jedno zapytanie:
 
-<pre><code class="java">/*  
+{% highlight java %}   
 Hibernate: select distinct b1_0.id,b2_0.book_order_id,b2_0.id,b2_0.name,b2_0.price,b1_0.name,b1_0.user_id from book_order b1_0 join book b2_0 on b1_0.id=b2_0.book_order_id where b1_0.user_id=?
-</code></pre>
+{% endhighlight %} 
 
 Problem n+1 rozwiązany. Wprawdzie dane z tabeli podrzędnej pobrane zostałyby nawet bez odwołania się do nich (ładownie leniwe tutaj nie zadziałało) ale przynajmniej wykonało się to optymalnie jednym zapytaniem.
   
@@ -210,19 +211,19 @@ Problem n+1 rozwiązany. Wprawdzie dane z tabeli podrzędnej pobrane zostałyby 
 Jeżeli powyższy sposób nie końca odpowiada, i nie zawsze będziemy potrzebowali, aby dane z tabeli podrzędnej były pobierane, możemy przyjżeć się innemu rozwiązaniu. Pomoże nam w tym adnotacja pochodząca już bezpośrednio z Hibernate @Fetch oraz odpowiedni FetchMode.
 
 Usuwam w repozytorium adnotację @Query a dodaję w encji nadrzędnej BookOrder adnotacje @Fetch:
-<pre><code class="java">/*
+{% highlight java %}
 @OneToMany
 @Fetch(FetchMode.SUBSELECT)
 @JoinColumn(name = "BOOK_ORDER_ID")
 List<Book> books = new ArrayList<>();
-</code></pre>  
+{% endhighlight %}  
 
 W logach widać teraz dwa zapytania:
 
-<pre><code class="java">/*  
+{% highlight java %}
 Hibernate: select b1_0.id,b1_0.name,b1_0.user_id from book_order b1_0 where b1_0.user_id=?
 Hibernate: select b2_0.book_order_id,b2_0.id,b2_0.name,b2_0.price from book b2_0 where b2_0.book_order_id in(select b1_0.id from book_order b1_0 where b1_0.user_id=?)
-  
+{% endhighlight %}   
   
 Pierwsze zapytanie jest o zamówienia, drugie zapytania pojawiło się gdy następiło odwołanie do tabeli podrzędnej. Drugie zapytanie widać, że korzysta z wyniku podzapytania. 
   
