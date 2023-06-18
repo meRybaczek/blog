@@ -1,7 +1,7 @@
 ---
 published: true
 ---
-![]({{site.baseurl}}/images/thinking-in-java.jpg)
+![]({{site.baseurl}}/images/thinking-in-java-small.jpg)
 
 W językach takich jak C czy C++ programy są ładowane w całości podczas startu. W języku Java proces ten wygląda nieco inaczej. Skompilowane już klasy wczytywane są do pamięci dopiero gdy są potrzebne. A są potrzebne gdy zostaje wywołany konstruktor klasy lub pojawia się odniesienie do jego ststycznego pola lub statycznej metody. To właśnie wtedy zostają zainicjalizowane statyczne pola i statyczne bloki w porządku tekstowym.
 
@@ -81,7 +81,3 @@ Program kończy swoje działanie.
 Na tym dość urozmaiconym przykładzie bardzo przejżyście można poznać kolejność inicjalizacji i ładowania klas w jęzku Java. Zdecydowanie polecam przerabiać samemu takie przykłady. W moim przypadku sucha teoria się nie sprawdza. Powyższy przykład pochodzi z książki **Thinking in Java Bruce'a Eckela**. Pozycja może i wyciągnięta z pawlacza, i ma odstraszjące 1248 stron (i to bez obrazków) ale znajdziecie w niej niejeden tak rozjaśniający umysł przykład.
 
 Kod z artykułu znajdziesz [tutaj](https://github.com/meRybaczek/ClassLoading).
-
-
-
-
