@@ -1,7 +1,7 @@
 ---
 published: true
 ---
-![]({{site.baseurl}}/images/dht11.jpg)
+![]({{site.baseurl}}/images/arduino-small.png)
 
 Projekt mojego mikroserwisu pogodowego posiada w kontrolerze endpoint zwracający między innymi bieżącą temperaturę na zewnątrz. Aktualnie temperatura ta jest zwracana z wykorzystaniem zewnętrznego API openweather.com,z którym łączy się serwis. Po zmapowaniu odpowiedzi z openweather na encje, odpowiedź wraca do klienta. Postanowiłem pójść krok dalej i jako alternatywne źródło danych wykorzystać własny czujnik temperatury. A raczej od teraz to czujnik będzie głownym źródłem a openweather backupem. 
 
