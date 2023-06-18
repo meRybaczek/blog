@@ -8,8 +8,8 @@ Electric, electronic, colorimetric enthusiast and engaged to Java programming re
 
 ### More Information
 
-Ready to be hire as a Junior Java Developer
+Ready to be hire as a Junior Java Developer.
 
 ### Contact me
 
-linkedin: /wojciech-rybaczek-1401821a5
+linkedin below.
