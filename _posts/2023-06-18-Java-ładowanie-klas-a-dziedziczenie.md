@@ -81,6 +81,8 @@ Program kończy swoje działanie.
 
 Na tym dość urozmaiconym przykładzie bardzo przejżyście można poznać kolejność inicjalizacji i ładowania klas w jęzku Java. Zdecydowanie polecam przerabiać samemu takie przykłady. W moim przypadku sucha teoria się nie sprawdza. Powyższy przykład pochodzi z książki **Thinking in Java Bruce'a Eckela**. Pozycja może i wyciągnięta z pawlacza, i ma odstraszjące 1248 stron (i to bez obrazków) ale znajdziecie w niej niejeden tak rozjaśniający umysł przykład.
 
+Kod z artykułu znajdziesz [tutaj](https://github.com/meRybaczek/ClassLoading).
+
 
 
 
