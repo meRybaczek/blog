@@ -51,7 +51,7 @@ public class BookOrder {
 {% endhighlight %}
 
   
-Oraz mamy encje podrzędną Book:
+Encja poodrzędna Book:
 
 {% highlight java %}
 @Entity
@@ -106,7 +106,7 @@ CREATE TABLE BOOK_ORDER(ID BIGINT AUTO_INCREMENT PRIMARY KEY, USER_ID BIGINT, NA
 CREATE TABLE BOOK(ID BIGINT AUTO_INCREMENT PRIMARY KEY,BOOK_ORDER_ID BIGINT,FOREIGN KEY (BOOK_ORDER_ID) REFERENCES BOOK_ORDER, NAME VARCHAR(255), PRICE DOUBLE);
 {% endhighlight %}
   
-Oraz wypełniam je danymi testowymi:
+oraz wypełniam je danymi testowymi:
 
 V2__data.sql:
 {% highlight java %}
@@ -160,11 +160,11 @@ public class SomeTest {
 
 ## Logowanie zapytań SQL
   
-Aby unaocznić, ile faktycznie zapytań Hibernate wysłał do bazy danych w pliku properties należy ustawić właściwość:
+Aby unaocznić, ile faktycznie zapytań Hibernate wysłał do bazy danych, w pliku properties należy ustawić właściwość:
   
 spring.jpa.show-sql=true
 
-Po uruchomieniu test w logach zobaczymy, iż Hibernate wykonał aż 7 zapytań:
+Po uruchomieniu testu w logach zobaczymy, iż Hibernate wykonał aż 7 zapytań:
   
 {% highlight java %}
 Hibernate: select b1_0.id,b1_0.name,b1_0.user_id from book_order b1_0 where b1_0.user_id=?
@@ -176,11 +176,11 @@ Hibernate: select b1_0.book_order_id,b1_0.id,b1_0.name,b1_0.price from book b1_0
 Hibernate: select b1_0.book_order_id,b1_0.id,b1_0.name,b1_0.price from book b1_0 where b1_0.book_order_id=?
 {% endhighlight %}
   
-Pierwsze zapytanie jest o wszystkie zamówienia dla klienta userId=1, było ich 6 i dodatkowo dla każdego z 6 zamówień zostało wykonane zapytanie o listę książek. Mamy przykłd niewydajnego problemu n+1 (6+1 = 7)
+Pierwsze zapytanie jest o wszystkie zamówienia dla klienta userId=1, było ich 6, i dodatkowo dla każdego z tych 6 zamówień zostało wykonane zapytanie o listę książek. Mamy przykłd małowydajnego problemu n+1 (6+1 = 7)
   
 W relacji OneToMany dane z tabeli zależnej są "dociągane" gdy następuje do nich odwołanie na otwartej transakcji. Jest to tzw Lazy Loading. Takie ustawienie jest domyślne dla tego typu relacji. 
   
-Sprawdźmy zatem ile będzie zapytań gdy zmienimy w klasie encji BookOrder Lazy na Eager:
+Sprawdźmy zatem ile będzie zapytań gdy zmienimy w klasie encji BookOrder z Lazy na Eager:
   
 {% highlight java %}  
 @OneToMany(fetch = FetchType.EAGER)
@@ -193,7 +193,7 @@ Nie będę wklejał logów ponownie, ale uwierzcie, że są identyczne jak w prz
 ## Rozwiązanie problemu n+1
   
 **Metoda 1.**
-Problem możemy rozwiązać wymuszając zapytanie z łączeniem obu tabel. Możemy zatem zmienić naszą metodę w repozytorium:
+Problem możemy rozwiązać wymuszając zapytanie z łączeniem obu tabel. Możemy zatem zmienić naszą metodę w repozytorium, konstruując odpowiednie zapytanie:
 {% highlight java %}  
 @Query("select distinct b from BookOrder b join fetch b.books where b.userId = ?1")
 List<BookOrder> findByUserId(Long userId);
@@ -210,7 +210,7 @@ Problem n+1 rozwiązany. Wprawdzie dane z tabeli podrzędnej pobrane zostałyby 
 **Metoda 2.**
 Jeżeli powyższy sposób nie końca odpowiada, i nie zawsze będziemy potrzebowali, aby dane z tabeli podrzędnej były pobierane, możemy przyjżeć się innemu rozwiązaniu. Pomoże nam w tym adnotacja pochodząca już bezpośrednio z Hibernate @Fetch oraz odpowiedni FetchMode.
 
-Usuwam w repozytorium adnotację @Query a dodaję w encji nadrzędnej BookOrder adnotacje @Fetch:
+Usuwam zatem w repozytorium adnotację @Query, a dodaję w encji BookOrder adnotacje @Fetch:
 {% highlight java %}
 @OneToMany
 @Fetch(FetchMode.SUBSELECT)
