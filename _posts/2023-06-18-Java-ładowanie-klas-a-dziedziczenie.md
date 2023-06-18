@@ -78,7 +78,7 @@ j = 39"
 
 Program kończy swoje działanie.
 
-Na tym dość urozmaiconym przykładzie bardzo przejżyście można poznać kolejność inicjalizacji i ładowania klas. Zdecydowanie polecam przerabiać samemu takie przykłady. W moim przypadku sucha teoria się nie sprawdza. Powyższy przykład pochodzi z książki **Thinking in Java Bruce'a Eckela**. Pozycja może i wyciągnięta z pawlacza, i ma odstraszjące 1248 stron (bez obrazków) ale znajdziecie w niej niejeden tak ciekawy przykład.
+Na tym dość urozmaiconym przykładzie bardzo przejżyście można poznać kolejność inicjalizacji i ładowania klas w jęzku Java. Zdecydowanie polecam przerabiać samemu takie przykłady. W moim przypadku sucha teoria się nie sprawdza. Powyższy przykład z robakami pochodzi z książki **Thinking in Java Bruce'a Eckela**. Pozycja może i wyciągnięta z pawlacza, i ma odstraszjące 1248 stron (i bez obrazków) ale znajdziecie w niej niejeden tak ciekawy przykład.
 
 
 
