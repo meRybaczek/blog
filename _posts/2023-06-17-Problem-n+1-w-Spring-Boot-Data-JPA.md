@@ -165,7 +165,9 @@ spring.jpa.show-sql=true
 
 Po uruchomieniu test w logach zobaczymy, iż Hibernate wykonał aż 7 zapytań:
   
-<code-fence lang="java" heading="Console">
+<figure class="highlight">
+  <pre>
+    <code class="language-java" data-lang="java">
 
 Hibernate: select b1_0.id,b1_0.name,b1_0.user_id from book_order b1_0 where b1_0.user_id=?
 Hibernate: select b1_0.book_order_id,b1_0.id,b1_0.name,b1_0.price from book b1_0 where b1_0.book_order_id=?
@@ -175,7 +177,9 @@ Hibernate: select b1_0.book_order_id,b1_0.id,b1_0.name,b1_0.price from book b1_0
 Hibernate: select b1_0.book_order_id,b1_0.id,b1_0.name,b1_0.price from book b1_0 where b1_0.book_order_id=?
 Hibernate: select b1_0.book_order_id,b1_0.id,b1_0.name,b1_0.price from book b1_0 where b1_0.book_order_id=?
 
-</code-fence> 
+ </code>
+  </pre>
+</figure>
   
 Pierwsze zapytanie jest o wszystkie zamówienia dla klienta userId=1, było ich 6 i dodatkowo dla każdego z 6 zamówień zostało wykonane zapytanie o listę książek. Mamy przykłd niewydajnego problemu n+1 (6+1 = 7)
   
