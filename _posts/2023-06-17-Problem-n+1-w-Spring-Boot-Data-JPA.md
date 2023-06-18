@@ -161,10 +161,10 @@ public class SomeTest {
   
 Aby unaocznić, ile faktycznie zapytań Hibernate wysłał do bazy danych w pliku properties należy ustawić właściwość:
   
-  spring.jpa.show-sql=true
-  
+spring.jpa.show-sql=true
 
 Po uruchomieniu test w logach zobaczymy, iż Hibernate wykonał aż 7 zapytań:
+  
 <pre><code class="java">/*   
 Hibernate: select b1_0.id,b1_0.name,b1_0.user_id from book_order b1_0 where b1_0.user_id=?
 Hibernate: select b1_0.book_order_id,b1_0.id,b1_0.name,b1_0.price from book b1_0 where b1_0.book_order_id=?
@@ -174,16 +174,19 @@ Hibernate: select b1_0.book_order_id,b1_0.id,b1_0.name,b1_0.price from book b1_0
 Hibernate: select b1_0.book_order_id,b1_0.id,b1_0.name,b1_0.price from book b1_0 where b1_0.book_order_id=?
 Hibernate: select b1_0.book_order_id,b1_0.id,b1_0.name,b1_0.price from book b1_0 where b1_0.book_order_id=?
 </code></pre>   
+  
 Pierwsze zapytanie jest o wszystkie zamówienia dla klienta userId=1, było ich 6 i dodatkowo dla każdego z 6 zamówień zostało wykonane zapytanie o listę książek. Mamy przykłd niewydajnego problemu n+1 (6+1 = 7)
   
 W relacji OneToMany dane z tabeli zależnej są "dociągane" gdy następuje do nich odwołanie na otwartej transakcji. Jest to tzw Lazy Loading. Takie ustawienie jest domyślne dla tego typu relacji. 
   
 Sprawdźmy zatem ile będzie zapytań gdy zmienimy w klasie encji BookOrder Lazy na Eager:
+  
 <pre><code class="java">/*   
 @OneToMany(fetch = FetchType.EAGER)
 @JoinColumn(name = "BOOK_ORDER_ID")
 List<Book> books = new ArrayList<>();
 </code></pre>     
+
 Nie będę wklejał logów ponownie, ale uwierzcie, że są identyczne jak w przypadku Lazy. Taka sama liczba zapytań wysłanych do bazy danych. Nie dość, że dane z tabeli zależnej zostałyby pobrane nawet bez odwołania się do nich, to dodatkowo problem n+1 nie zniknął.
   
 ## Rozwiązanie problemu n+1
@@ -193,14 +196,17 @@ Problem możemy rozwiązać wymuszając zapytanie z łączeniem obu tabel. Może
 <pre><code class="java">/*  
 @Query("select distinct b from BookOrder b join fetch b.books where b.userId = ?1")
 List<BookOrder> findByUserId(Long userId);
-</code></pre>    
+</code></pre> 
+
 Uruchamiając test ponownie widzimy już tylko jedno zapytanie:
+
 <pre><code class="java">/*  
 Hibernate: select distinct b1_0.id,b2_0.book_order_id,b2_0.id,b2_0.name,b2_0.price,b1_0.name,b1_0.user_id from book_order b1_0 join book b2_0 on b1_0.id=b2_0.book_order_id where b1_0.user_id=?
-</code></pre>    
+</code></pre>
+
 Problem n+1 rozwiązany. Wprawdzie dane z tabeli podrzędnej pobrane zostałyby nawet bez odwołania się do nich (ładownie leniwe tutaj nie zadziałało) ale przynajmniej wykonało się to optymalnie jednym zapytaniem.
   
-## Metoda 2.
+**Metoda 2.**
 Jeżeli powyższy sposób nie końca odpowiada, i nie zawsze będziemy potrzebowali, aby dane z tabeli podrzędnej były pobierane, możemy przyjżeć się innemu rozwiązaniu. Pomoże nam w tym adnotacja pochodząca już bezpośrednio z Hibernate @Fetch oraz odpowiedni FetchMode.
 
 Usuwam w repozytorium adnotację @Query a dodaję w encji nadrzędnej BookOrder adnotacje @Fetch:
@@ -210,11 +216,13 @@ Usuwam w repozytorium adnotację @Query a dodaję w encji nadrzędnej BookOrder
 @JoinColumn(name = "BOOK_ORDER_ID")
 List<Book> books = new ArrayList<>();
 </code></pre>  
+
 W logach widać teraz dwa zapytania:
+
 <pre><code class="java">/*  
 Hibernate: select b1_0.id,b1_0.name,b1_0.user_id from book_order b1_0 where b1_0.user_id=?
 Hibernate: select b2_0.book_order_id,b2_0.id,b2_0.name,b2_0.price from book b2_0 where b2_0.book_order_id in(select b1_0.id from book_order b1_0 where b1_0.user_id=?)
-</code></pre>    
+  
   
 Pierwsze zapytanie jest o zamówienia, drugie zapytania pojawiło się gdy następiło odwołanie do tabeli podrzędnej. Drugie zapytanie widać, że korzysta z wyniku podzapytania. 
   
