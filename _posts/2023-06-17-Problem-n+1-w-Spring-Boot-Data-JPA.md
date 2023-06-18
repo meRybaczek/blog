@@ -142,7 +142,7 @@ public class SomeTest {
 
     @Test
     @Transactional
-    void shouldExtractItemsFromOrders(){
+    void shouldCountBooksFromUserId(){
 
         List<BookOrder> summaries = bookOrderRepository.findByUserId(1L);
 
