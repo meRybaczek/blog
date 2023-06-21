@@ -1,7 +1,7 @@
 ---
 published: true
 ---
-![]({{site.baseurl}}/images/thinking-in-java-small.jpg)
+![]({{site.baseurl}}/images/thinkinginjava-logo.jpg)
 
 W językach takich jak C czy C++ programy są ładowane w całości podczas startu. W języku Java proces ten wygląda nieco inaczej. Skompilowane już klasy wczytywane są do pamięci dopiero gdy są potrzebne. A są potrzebne gdy zostaje wywołany konstruktor klasy lub pojawia się odniesienie do jego ststycznego pola lub statycznej metody. To właśnie wtedy zostają zainicjalizowane statyczne pola i statyczne bloki w porządku tekstowym.
 
