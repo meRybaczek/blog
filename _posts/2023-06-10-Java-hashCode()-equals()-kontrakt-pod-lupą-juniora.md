@@ -1,8 +1,7 @@
 ---
 published: true
 ---
-
-![]({{site.baseurl}}/images/mala-czerwona-zabawka-samochodowa-dla-dziecka-bawiacego-sie-z-nia-dziecka.jpg)
+![]({{site.baseurl}}/images/equals-logo.jpg)
 
 Gdy moje dziecięce resoraki miały przyciemniane szyby, przez które nie można było zajrzeć do środka, ciekawość skutecznie namawiała mnie do demontażu takiej zabawki. Teraz, ucząc się Javy, jest podobnie. Nieraz mam potrzebę przeanalizowania zagadnienia bardziej szczegółowo niż dostarcza mi to zdawkowy tutorial czy przerabiany temat kursu. Klikam wtedy lawinowo w kolejne klasy bazowe i interfejsy, szukając źródła implementacji i testując kod na różne sposoby. Tym razem pod lupę trafił temat kontraktu pomiędzy metodą equals() i hashCode(). 
 
