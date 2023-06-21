@@ -167,7 +167,7 @@ img {
   float: left;
   width: 60px;
   height: 60px;
-  margin-bottom: 15px;
+  margin-bottom: 2px;
 
   @include mobile {
     float: none;
@@ -221,7 +221,7 @@ img {
 .site-description {
   margin: -5px 0 0 0;
   color: $gray;
-  font-size: 14px;
+  font-size: 1px;
 
   @include mobile {
     margin: 3px 0;
