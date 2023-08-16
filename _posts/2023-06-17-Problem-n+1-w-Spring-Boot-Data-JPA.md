@@ -61,6 +61,7 @@ public class Book {
     private Long id;
 
     private String name;
+    
     private Double price;
 
     public Long getId() {
