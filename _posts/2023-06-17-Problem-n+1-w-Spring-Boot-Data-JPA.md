@@ -16,15 +16,15 @@ Czyli klasycznie mamy klasę z zamówieniem BookOrder, a w niej użytkownika (Lo
 public class BookOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    Long userId;
+    private Long userId;
 
-    String name;
+    private String name;
 
     @OneToMany
     @JoinColumn(name = "BOOK_ORDER_ID")
-    List<Book> books = new ArrayList<>();
+    private List<Book> books = new ArrayList<>();
 
     public Long getUserId() {
         return userId;
@@ -58,10 +58,10 @@ Encja poodrzędna Book:
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    String name;
-    Double price;
+    private String name;
+    private Double price;
 
     public Long getId() {
         return id;
