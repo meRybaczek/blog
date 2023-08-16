@@ -188,7 +188,7 @@ Sprawdźmy zatem ile będzie zapytań gdy zmienimy w klasie encji BookOrder z La
 List<Book> books = new ArrayList<>();
 {% endhighlight %}   
 
-Nie będę wklejał logów ponownie, ale uwierzcie, że są identyczne jak w przypadku Lazy. Taka sama liczba zapytań wysłanych do bazy danych. Nie dość, że dane z tabeli zależnej zostałyby pobrane nawet bez odwołania się do nich, to dodatkowo problem n+1 nie zniknął.
+Nie będę wklejał logów ponownie, ale uwierzcie, że są identyczne jak w przypadku Lazy. Taka sama liczba zapytań wysłanych do bazy danych. Zatem nie dość, że dane z tabeli zależnej zostają pobrane nawet bez odwołania się do nich, to dodatkowo problem n+1 nie został rozwiązany.
   
 ## Rozwiązanie problemu n+1
   
